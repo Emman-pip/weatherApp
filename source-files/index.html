@@ -8,40 +8,43 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <div class="design"></div>
+    <!-- <div class="design"></div> -->
     <div class="container">
-      <div class="weatherInfoContainer">
-        <div class="weatherBox">
-          <div class="info">
-            <div class="text">
-              <div class="location">Some, Place</div>
-              <div class="condition">Partly cloudy with meatballs</div>
+      <div class="weatherAndNews">
+        <div class="weatherInfoContainer">
+          <div class="weatherBox">
+            <div class="info">
+              <div class="text">
+                <div class="location">Some, Place</div>
+                <div class="condition">Partly cloudy with meatballs</div>
+              </div>
+
+              <div class="pictures">
+                <div class="temperature"></div>
+                <div class="date"></div>
+                <!-- <div class="time">00:00</div> -->
+              </div>
             </div>
 
-            <div class="pictures">
-              <div class="temperature"></div>
-              <div class="date"></div>
-              <!-- <div class="time">00:00</div> -->
+            <img
+              class="conditionImage"
+              alt="ConditionIcon"
+              src="/media/7481714.jpg"
+            />
+          </div>
+        </div>
+
+        <div class="newsPanel">
+          <div class="newsWidgets">
+            <div class="topbar">
+              <input class="search" type="search" />
+              <button class="onlyButton">search</button>
             </div>
+            <div class="newsfeed"></div>
           </div>
-
-          <img
-            class="conditionImage"
-            alt="ConditionIcon"
-            src="/media/7481714.jpg"
-          />
         </div>
       </div>
-
-      <div class="newsPanel">
-        <div class="newsWidgets">
-          <div class="topbar">
-            <input class="search" type="search" />
-            <button class="onlyButton">search</button>
-          </div>
-          <div class="newsfeed"></div>
-        </div>
-      </div>
+      <div class="future"></div>
     </div>
   </body>
 </html>

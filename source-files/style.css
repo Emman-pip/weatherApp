@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+
   box-sizing: border-box;
   --a-color: #315170;
   --b-color: #b3d3f2;
@@ -22,6 +23,21 @@ body {
   background-color: var(--b-color);
   height: 100vh;
   width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3vh;
+  /* z-index: 0; */
+}
+
+.weatherAndNews {
+  /* background-image: url("/media/7481714.jpg");
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat; */
+  background-color: var(--b-color);
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,3 +171,10 @@ body {
   right: 50vw;
   background: linear-gradient(to right top, #b3d3f236, #536270);
 } */
+
+.future {
+  background-color: #5388bd;
+  width: 70%;
+  height: 20vh;
+  border-radius: 3vh;
+}
