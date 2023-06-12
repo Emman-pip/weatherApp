@@ -55,22 +55,22 @@ async function APIdata(location) {
 async function forecastData(location) {
   const data = await APIdata(location);
   //   //location
-  //   const city = data[1].location.name;
-  //   const country = data[1].location.country;
+  //   const city = data.location.name;
+  //   const country = data.location.country;
   //   //date of forecast
-  //   const date = data[1].forecast.forecastday[0].date;
+  //   const date = data.forecast.forecastday[0].date;
   //   //per hour
-  //   const forecast = data[1].forecast.forecastday[0].hour;
-  //   const at_1am = data[1].forecast.forecastday[0].hour[1].temp_c;
-  //   const at_3am = data[1].forecast.forecastday[0].hour[1].temp_c;
-  //   const at_6am = data[1].forecast.forecastday[0].hour[1].temp_c;
-  //   const at_9am = data[1].forecast.forecastday[0].hour[1].temp_c;
-  //   const at_12am = data[1].forecast.forecastday[0].hour[1].temp_c;
-  //   const at_1pm = data[1].forecast.forecastday[0].hour[1].temp_c;
-  //   const at_3pm = data[1].forecast.forecastday[0].hour[1].temp_c;
-  //   const at_6pm = data[1].forecast.forecastday[0].hour[1].temp_c;
-  //   const at_9pm = data[1].forecast.forecastday[0].hour[1].temp_c;
-  //   const at_12pm = data[1].forecast.forecastday[0].hour[1].temp_c;
+  //   const forecast = data.forecast.forecastday[0].hour;
+  //   const at_1am = data.forecast.forecastday[0].hour[1].temp_c;
+  //   const at_3am = data.forecast.forecastday[0].hour[1].temp_c;
+  //   const at_6am = data.forecast.forecastday[0].hour[1].temp_c;
+  //   const at_9am = data.forecast.forecastday[0].hour[1].temp_c;
+  //   const at_12am = data.forecast.forecastday[0].hour[1].temp_c;
+  //   const at_1pm = data.forecast.forecastday[0].hour[1].temp_c;
+  //   const at_3pm = data.forecast.forecastday[0].hour[1].temp_c;
+  //   const at_6pm = data.forecast.forecastday[0].hour[1].temp_c;
+  //   const at_9pm = data.forecast.forecastday[0].hour[1].temp_c;
+  //   const at_12pm = data.forecast.forecastday[0].hour[1].temp_c;
 
   //   console.log(data[1]);
   //   console.log(at_12am);
@@ -149,14 +149,22 @@ async function newsData(subject) {
   return [articleTitle, articleDescription, articleUrl];
 }
 
-// async function weather(country) {
-//   const lol = await weatherData(country);
-//   console.log(`WEATHER:\nlocation: ${lol[0]}\ncondition:${lol[1]}`);
-// }
+async function weather(country) {
+  const data = await forecastData(country);
+  const city = data.location.name;
+  const nation = data.location.country;
+  const condition = data.current.condition.text;
+  console.log(
+    `WEATHER:\nlocation: ${city}, ${nation}\ncondition: ${condition}`
+  );
+  console.log(data);
+}
 
-newsData("Philippines").then((res) => {
-  console.log(res);
-});
+weather("Tanauan city, batangas");
+
+// newsData("Philippines").then((res) => {
+//   console.log(res);
+// });
 
 // news api key:b2950f13dd814fa19bd4a6e883ef3217
 // url format `https://newsapi.org/v2/everything?q=weather-${location}&from=2023-06-1&sortBy=popularity&apiKey=b2950f13dd814fa19bd4a6e883ef3217`
