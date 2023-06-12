@@ -181,7 +181,10 @@ async function newsData(subject) {
 //MALI ANG CELSIUS SA PROGRAM!!!
 async function perhour(time) {
   const data = await forecastData(location);
-  const temp = data.forecast.forecastday[0].hour[parseInt(time) - 1].temp_c;
+  const clock = parseInt(time);
+  console.log(data);
+  //   const temp = data.forecast.forecastday[0].hour[parseInt(time) - 1].temp_c;
+  const temp = data.forecast.forecastday[0].hour[clock].temp_c;
   return temp;
 }
 
@@ -201,8 +204,6 @@ async function useWeatherData(location = "Philippines") {
 
   const hour = weatherData.current.last_updated;
   const realHour = hour.slice(-5, -3);
-  console.log(realHour);
-
   perhour(realHour).then((res) => {
     temperature.textContent = ` ${res}°C`;
   });
@@ -240,11 +241,9 @@ async function futureWeather(loc) {
     const container = document.querySelector(".future");
     container.innerHTML = "";
     const data = await forecastData(loc);
-    console.log(data);
+
     const hourlyData = data.forecast.forecastday[0].hour;
-    console.log("running...");
     for (let i = 0; i < 24; i++) {
-      console.log("creating...");
       const time = hourlyData[i].time;
       const timeofDay = time.split(-5);
       const temp = hourlyData[i].temp_c;
@@ -281,7 +280,6 @@ function call(value = "Philippines") {
     call(searchBox.value);
   });
   searchBox.addEventListener("keyup", (event) => {
-    console.log(event);
     if (event.code == "Enter") {
       call(searchBox.value);
     }
