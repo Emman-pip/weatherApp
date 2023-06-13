@@ -56,6 +56,7 @@ body {
   gap: 5vh;
   background: linear-gradient(to right top, #385d8200, #315170);
   backdrop-filter: blur(2rem);
+  box-shadow: 10px -15px 10px rgba(0, 0, 0, 0.195);
 }
 
 .info {
@@ -66,19 +67,10 @@ body {
 }
 
 .location {
-  font-size: 7vh;
+  font-size: 5vh;
 }
 .condition {
-  font-size: 4vh;
-}
-
-.date,
-.temperature {
-  background: linear-gradient(to left bottom, #5388bd00, #5388bdba);
-  font-size: 3vh;
-  border-radius: 1vh;
-  height: 100%;
-  width: 100%;
+  font-size: 6vh;
 }
 
 .pictures {
@@ -115,6 +107,7 @@ body {
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(2rem);
+  box-shadow: -10px -15px 10px rgba(0, 0, 0, 0.195);
 }
 
 .topbar {
@@ -144,13 +137,10 @@ body {
 
 .newsWidgets {
   height: 100%;
-
-  scroll-behavior: smooth;
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  gap: 2vh;
 }
 ::-webkit-scrollbar {
   width: 5px;
@@ -190,6 +180,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 3vh;
+  padding-top: 3vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .newsTitle {
@@ -208,6 +201,7 @@ body {
   height: 25vh;
   border-radius: 3vh;
   padding: 1rem;
+  box-shadow: 0px -15px 10px rgba(0, 0, 0, 0.195);
 }
 
 .hourlyContainer {
@@ -219,4 +213,119 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: end;
+}
+
+.newsfeed {
+  background: rgba(245, 245, 245, 0.5);
+  border-bottom-right-radius: 3vh;
+  border-bottom-left-radius: 3vh;
+}
+.conditionImage {
+  overflow: visible;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 1450px) {
+  .weatherAndNews {
+    display: flex;
+    flex-direction: column;
+  }
+  .weatherBox,
+  .newsPanel,
+  .future {
+    min-width: 95vw;
+    min-height: 20vh;
+  }
+
+  .future {
+    min-height: 10vh;
+  }
+  .container {
+    height: fit-content;
+    padding: 3vh;
+  }
+  .location {
+    font-size: 3vw;
+  }
+  .condition {
+    font-size: 4vw;
+  }
+}
+
+@media (max-width: 750px) {
+  .weatherBox {
+    height: 30vw;
+  }
+  .text {
+    overflow-y: scroll;
+    padding-top: 1rem;
+  }
+  .pictures {
+    display: none;
+  }
+  .weatherAndNews {
+    gap: 1rem;
+  }
+  .future {
+    height: 20vh;
+  }
+  .location {
+    font-size: 3vw;
+  }
+  .condition {
+    font-size: 4vw;
+  }
+}
+
+@media (max-width: 370px) {
+  body {
+    overflow: scroll;
+  }
+  .weatherAndNews {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .weatherBox,
+  .newsPanel,
+  .future {
+    min-width: 350px;
+    max-height: 500px;
+  }
+  .location {
+    font-size: 3vw;
+  }
+  .condition {
+    font-size: 4vw;
+  }
+}
+
+.temperatureText {
+  font-size: 3vh;
+  font-weight: 1000;
+  /* color: whitesmoke; */
+  /* background: url("/media/thermometer-lines.svg") center center no-repeat; */
+}
+
+.date,
+.temperature {
+  font-size: 3vh;
+  display: flex;
+  font-weight: 1000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to left bottom, #5388bd00, #5388bdba);
+  border-radius: 1vh;
+  height: 100%;
+  width: 100%;
+}
+
+.thermo {
+  height: 100%;
+  width: 100%;
 }

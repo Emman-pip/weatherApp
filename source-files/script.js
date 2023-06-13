@@ -188,11 +188,46 @@ async function perhour(time) {
   return temp;
 }
 
+async function weatherConditionPic(condition = "Sunny") {
+  const request = new Request(
+    "https://www.weatherapi.com/docs/conditions.json"
+  );
+  const data = await fetch(request);
+  const image = document.querySelector(".conditionImage");
+  const jsn = await data.json();
+  console.log(jsn);
+  let icon = "";
+
+  for (let i = 0; i < jsn.length; i++) {
+    if (condition.toLowerCase() == jsn[i].day.toLowerCase()) {
+      icon = jsn[i].icon;
+    } else if (condition.toLowerCase() == "clear") {
+      image.src = "/media/weather/weather/64x64/night/113.png";
+      return;
+    }
+  }
+  if (icon == "") {
+    alert("No Available Icon for the Weather Condition");
+  }
+
+  image.src = `/media/weather/weather/64x64/day/${icon}.png`;
+}
+
+function InsertImageElement(src, parent) {
+  const mother = document.querySelector(`${parent}`);
+  const image = document.createElement("img");
+  image.classList.add("thermo");
+  image.src = src;
+  mother.appendChild(image);
+}
+
 async function useWeatherData(location = "Philippines") {
   const loc = document.querySelector(".location");
   const condition = document.querySelector(".condition");
   const temperature = document.querySelector(".temperature");
   const date = document.querySelector(".date");
+  date.innerHTML = "";
+  temperature.innerHTML = "";
   //weatherAPI
   const weatherData = await forecastData(location);
   const city = weatherData.location.name;
@@ -201,14 +236,25 @@ async function useWeatherData(location = "Philippines") {
 
   loc.textContent = `${city}, ${nation}`;
   condition.textContent = `${conditionText}`;
+  console.log(conditionText);
+  weatherConditionPic(conditionText);
 
+  InsertImageElement("/media/Thermometer_icon.png", ".temperature");
   const hour = weatherData.current.last_updated;
   const realHour = hour.slice(-5, -3);
   perhour(realHour).then((res) => {
-    temperature.textContent = ` ${res}°C`;
+    const p = document.createElement("p");
+    p.classList.add("temperatureText");
+    p.textContent = ` ${res}°C`;
+    temperature.appendChild(p);
   });
 
-  date.textContent = hour.slice(0, 10);
+  const COR = weatherData.forecast.forecastday[0].day.daily_chance_of_rain;
+  const dateText = document.createElement("p");
+  console.log(COR);
+  dateText.classList.add("date");
+  dateText.textContent = COR + "% chance of rain";
+  date.appendChild(dateText);
 }
 
 async function useNewsData(subject = "Philippines") {
