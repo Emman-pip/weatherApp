@@ -188,31 +188,38 @@ async function perhour(time) {
   return temp;
 }
 
-async function weatherConditionPic(condition = "Sunny") {
+async function hourlyConditionPic(time, image) {
   const request = new Request(
     "https://www.weatherapi.com/docs/conditions.json"
   );
   const data = await fetch(request);
-  const image = document.querySelector(".conditionImage");
+  // const image = document.querySelector(".hourlyCondition");
   const jsn = await data.json();
   console.log(jsn);
-  let icon = "";
-
-  for (let i = 0; i < jsn.length; i++) {
-    if (condition.toLowerCase() == jsn[i].day.toLowerCase()) {
-      icon = jsn[i].icon;
-    } else if (condition.toLowerCase() == "clear") {
-      image.src = "/media/weather/weather/64x64/night/113.png";
-      return;
-    }
+  if (parseInt(time) < 6 || parseInt(time) > 18) {
+    image.src = `/media/weather/weather/64x64/night/${jsn[time].icon}.png`;
+  } else {
+    image.src = `/media/weather/weather/64x64/day/${jsn[time].icon}.png`;
   }
-  if (icon == "") {
-    alert("No Available Icon for the Weather Condition");
-  }
+  // let icon = "";
 
-  image.src = `/media/weather/weather/64x64/day/${icon}.png`;
+  // for (let i = 0; i < jsn.length; i++) {
+  //   if (time == jsn[i].day.toLowerCase()) {
+  //     console.log(condition + "\n" + jsn[i].day);
+  //     icon = jsn[i].day;
+  //     return;
+  //   } else if (condition.toLowerCase() == "clear") {
+  //     image.src = "/media/weather/weather/64x64/night/113.png";
+  //     return;
+  //   }
+  // }
+  // if (icon == "") {
+  //   alert("No Available Icon for the Weather Condition");
+  // }
+
+  //   image.src = `/media/weather/weather/64x64/day/${icon}.png`;
 }
-//
+
 function InsertImageElement(src, parent) {
   const mother = document.querySelector(`${parent}`);
   const image = document.createElement("img");
@@ -236,8 +243,11 @@ async function useWeatherData(location = "Philippines") {
 
   loc.textContent = `${city}, ${nation}`;
   condition.textContent = `${conditionText}`;
-  console.log(conditionText);
-  weatherConditionPic(conditionText);
+  // console.log(conditionText);
+  // weatherConditionPic(conditionText);
+
+  const image = document.querySelector(".conditionImage");
+  image.src = weatherData.current.condition.icon;
 
   InsertImageElement("/media/Thermometer_icon.png", ".temperature");
   const hour = weatherData.current.last_updated;
@@ -251,7 +261,7 @@ async function useWeatherData(location = "Philippines") {
 
   const COR = weatherData.forecast.forecastday[0].day.daily_chance_of_rain;
   const dateText = document.createElement("p");
-  console.log(COR);
+
   dateText.classList.add("date");
   dateText.textContent = COR + "% chance of rain";
   date.appendChild(dateText);
@@ -298,8 +308,16 @@ async function futureWeather(loc) {
       fcontainer.classList.add("hourlyContainer");
       container.appendChild(fcontainer);
 
+      const picture = document.createElement("img");
+      picture.classList.add("hourlyCondition");
+      fcontainer.appendChild(picture);
+
+      const hour = parseInt(timeofDay[0].slice(-5, -3));
+      console.log(hour);
+      hourlyConditionPic(hour, picture);
+
       const timeDisplay = document.createElement("p");
-      timeDisplay.textContent = timeofDay;
+      timeDisplay.textContent = timeofDay[0].slice(-5);
       fcontainer.appendChild(timeDisplay);
 
       const tempDisplay = document.createElement("p");
