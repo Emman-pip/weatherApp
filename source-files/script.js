@@ -50,14 +50,20 @@ async function APIdata(location) {
     const jsn = await Promise.all([dataNews.json(), dataForecast.json()]);
     return jsn;
   } catch (error) {
-    console.log(error);
+    alert(err + "\nSEEMS LIKE I'M NOT UP");
+    window.close();
   }
 }
 
 //forecast
 async function forecastData(location) {
-  const data = await APIdata(location);
-  return data[1];
+  try {
+    const data = await APIdata(location);
+    return data[1];
+  } catch (err) {
+    alert(err + "\nSEEMS LIKE I'M NOT UP");
+    window.close();
+  }
   //   //location
   //   const city = data.location.name;
   //   const country = data.location.country;
@@ -128,29 +134,33 @@ function toAppend(data, list1, list2, list3) {
 //for news
 // TODO: capitalize the 1st letter[of "subject"] and lowercase the remaining
 async function newsData(subject) {
-  const data = await APIdata(subject);
-  const articleTitle = [];
-  const articleDescription = [];
-  const articleUrl = [];
+  try {
+    const data = await APIdata(subject);
+    const articleTitle = [];
+    const articleDescription = [];
+    const articleUrl = [];
 
-  const descriptions = [];
-  const titles = [];
-  const urls = [];
-  toAppend(data, descriptions, titles, urls);
+    const descriptions = [];
+    const titles = [];
+    const urls = [];
+    toAppend(data, descriptions, titles, urls);
 
-  const filter = keyWords(subject);
-  for (let i = 0; i < filter.length; i++) {
-    titles.forEach((word) => {
-      if (word.includes(filter[i])) {
-        const index = titles.indexOf(word);
-        articleTitle.push(titles[index]);
-        articleDescription.push(descriptions[index]);
-        articleUrl.push(urls[index]);
-      }
-    });
+    const filter = keyWords(subject);
+    for (let i = 0; i < filter.length; i++) {
+      titles.forEach((word) => {
+        if (word.includes(filter[i])) {
+          const index = titles.indexOf(word);
+          articleTitle.push(titles[index]);
+          articleDescription.push(descriptions[index]);
+          articleUrl.push(urls[index]);
+        }
+      });
+    }
+
+    return [articleTitle, articleDescription, articleUrl];
+  } catch (err) {
+    alert(err + "\nNO NEWS DATA AVAILABLE IN THE MOMENT");
   }
-
-  return [articleTitle, articleDescription, articleUrl];
 }
 
 // async function weather(country) {
@@ -189,17 +199,22 @@ async function perhour(time) {
 }
 
 async function hourlyConditionPic(time, image) {
-  const request = new Request(
-    "https://www.weatherapi.com/docs/conditions.json"
-  );
-  const data = await fetch(request);
-  // const image = document.querySelector(".hourlyCondition");
-  const jsn = await data.json();
-  console.log(jsn);
-  if (parseInt(time) < 6 || parseInt(time) > 18) {
-    image.src = `/media/weather/weather/64x64/night/${jsn[time].icon}.png`;
-  } else {
-    image.src = `/media/weather/weather/64x64/day/${jsn[time].icon}.png`;
+  try {
+    const request = new Request(
+      "https://www.weatherapi.com/docs/conditions.json"
+    );
+    const data = await fetch(request);
+    // const image = document.querySelector(".hourlyCondition");
+    const jsn = await data.json();
+    console.log(jsn);
+    if (parseInt(time) < 6 || parseInt(time) > 18) {
+      image.src = `/media/weather/weather/64x64/night/${jsn[time].icon}.png`;
+    } else {
+      image.src = `/media/weather/weather/64x64/day/${jsn[time].icon}.png`;
+    }
+  } catch (err) {
+    alert(err + "\nSEEMS LIKE I'M NOT UP");
+    window.close();
   }
   // let icon = "";
 
@@ -226,69 +241,83 @@ function InsertImageElement(src, parent) {
   image.classList.add("thermo");
   image.src = src;
   mother.appendChild(image);
+
+  // const search = document.querySelector(".onlyButton");
+  // const magnifyingGlass = new Image();
+  // magnifyingGlass.src = "/media/magnify.svg";
+  // search.appendChild(magnifyingGlass);
 }
 
 async function useWeatherData(location = "Philippines") {
-  const loc = document.querySelector(".location");
-  const condition = document.querySelector(".condition");
-  const temperature = document.querySelector(".temperature");
-  const date = document.querySelector(".date");
-  date.innerHTML = "";
-  temperature.innerHTML = "";
-  //weatherAPI
-  const weatherData = await forecastData(location);
-  const city = weatherData.location.name;
-  const nation = weatherData.location.country;
-  const conditionText = weatherData.current.condition.text;
+  try {
+    const loc = document.querySelector(".location");
+    const condition = document.querySelector(".condition");
+    const temperature = document.querySelector(".temperature");
+    const date = document.querySelector(".date");
+    date.innerHTML = "";
+    temperature.innerHTML = "";
+    //weatherAPI
+    const weatherData = await forecastData(location);
+    const city = weatherData.location.name;
+    const nation = weatherData.location.country;
+    const conditionText = weatherData.current.condition.text;
 
-  loc.textContent = `${city}, ${nation}`;
-  condition.textContent = `${conditionText}`;
-  // console.log(conditionText);
-  // weatherConditionPic(conditionText);
+    loc.textContent = `${city}, ${nation}`;
+    condition.textContent = `${conditionText}`;
+    // console.log(conditionText);
+    // weatherConditionPic(conditionText);
 
-  const image = document.querySelector(".conditionImage");
-  image.src = weatherData.current.condition.icon;
+    const image = document.querySelector(".conditionImage");
+    image.src = weatherData.current.condition.icon;
 
-  InsertImageElement("/media/Thermometer_icon.png", ".temperature");
-  const hour = weatherData.current.last_updated;
-  const realHour = hour.slice(-5, -3);
-  perhour(realHour).then((res) => {
-    const p = document.createElement("p");
-    p.classList.add("temperatureText");
-    p.textContent = ` ${res}°C`;
-    temperature.appendChild(p);
-  });
+    InsertImageElement("/media/Thermometer_icon.png", ".temperature");
+    const hour = weatherData.current.last_updated;
+    const realHour = hour.slice(-5, -3);
+    perhour(realHour).then((res) => {
+      const p = document.createElement("p");
+      p.classList.add("temperatureText");
+      p.textContent = ` ${res}°C`;
+      temperature.appendChild(p);
+    });
+    const COR = weatherData.forecast.forecastday[0].day.daily_chance_of_rain;
+    const dateText = document.createElement("p");
 
-  const COR = weatherData.forecast.forecastday[0].day.daily_chance_of_rain;
-  const dateText = document.createElement("p");
-
-  dateText.classList.add("date");
-  dateText.textContent = COR + "% chance of rain";
-  date.appendChild(dateText);
+    dateText.classList.add("date");
+    dateText.textContent = COR + "% chance of rain";
+    date.appendChild(dateText);
+  } catch (err) {
+    alert(err + "\nSEEMS LIKE I'M NOT UP");
+    window.close();
+  }
 }
 
 async function useNewsData(subject = "Philippines") {
-  const data = await newsData(subject);
-  const newsfeed = document.querySelector(".newsfeed");
-  newsfeed.innerHTML = "";
-  for (let i = 0; i < data[0].length; i++) {
-    const container = document.createElement("div");
-    container.classList.add("newsContainer");
+  try {
+    const data = await newsData(subject);
+    const newsfeed = document.querySelector(".newsfeed");
+    newsfeed.innerHTML = "";
+    for (let i = 0; i < data[0].length; i++) {
+      const container = document.createElement("div");
+      container.classList.add("newsContainer");
 
-    const title = document.createElement("h3");
-    title.classList.add("newsTitle");
-    title.textContent = data[0][i];
-    const description = document.createElement("p");
-    title.classList.add("newsDescription");
-    description.textContent = data[1][i];
+      const title = document.createElement("h3");
+      title.classList.add("newsTitle");
+      title.textContent = data[0][i];
+      const description = document.createElement("p");
+      title.classList.add("newsDescription");
+      description.textContent = data[1][i];
 
-    title.onclick = () => {
-      window.open(data[2][i]);
-    };
+      title.onclick = () => {
+        window.open(data[2][i]);
+      };
 
-    container.appendChild(title);
-    container.appendChild(description);
-    newsfeed.appendChild(container);
+      container.appendChild(title);
+      container.appendChild(description);
+      newsfeed.appendChild(container);
+    }
+  } catch (err) {
+    alert(err + "\nSEEMS LIKE I'M NOT UP");
+    window.close();
   }
 }
 
@@ -325,7 +354,8 @@ async function futureWeather(loc) {
       fcontainer.appendChild(tempDisplay);
     }
   } catch (error) {
-    console.log(error);
+    alert(err + "\nSEEMS LIKE I'M NOT UP");
+    window.close();
   }
 }
 
