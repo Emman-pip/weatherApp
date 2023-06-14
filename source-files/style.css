@@ -279,7 +279,7 @@ body {
     font-size: 4vw;
   }
 }
-
+/*  */
 @media (max-width: 370px) {
   body {
     overflow: scroll;

@@ -212,7 +212,7 @@ async function weatherConditionPic(condition = "Sunny") {
 
   image.src = `/media/weather/weather/64x64/day/${icon}.png`;
 }
-
+//
 function InsertImageElement(src, parent) {
   const mother = document.querySelector(`${parent}`);
   const image = document.createElement("img");
