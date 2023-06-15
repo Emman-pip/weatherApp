@@ -216,9 +216,9 @@ async function hourlyConditionPic(time, image) {
     const jsn = await data.json();
     console.log(jsn);
     if (parseInt(time) < 6 || parseInt(time) > 18) {
-      image.src = `/media/weather/weather/64x64/night/${jsn[time].icon}.png`;
+      image.src = `./media/weather/weather/64x64/night/${jsn[time].icon}.png`;
     } else {
-      image.src = `/media/weather/weather/64x64/day/${jsn[time].icon}.png`;
+      image.src = `./media/weather/weather/64x64/day/${jsn[time].icon}.png`;
     }
   } catch (err) {
     console.log(err);
@@ -279,7 +279,7 @@ async function useWeatherData(location = "Philippines") {
     const image = document.querySelector(".conditionImage");
     image.src = weatherData.current.condition.icon;
 
-    InsertImageElement("/media/Thermometer_icon.png", ".temperature");
+    InsertImageElement("./media/Thermometer_icon.png", ".temperature");
     const hour = weatherData.current.last_updated;
     const realHour = hour.slice(-5, -3);
     perhour(realHour).then((res) => {
