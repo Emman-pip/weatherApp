@@ -20,7 +20,7 @@ body {
         background-position: center center;
         background-size: cover;
         background-repeat: no-repeat; */
-  background-color: var(--b-color);
+  /* background-color: var(--b-color); */
 
   display: flex;
   align-items: center;
@@ -34,13 +34,13 @@ body {
 .weatherBox {
   overflow: hidden;
   height: 65vh;
-  width: 40vw;
+  width: 60vw;
   border-radius: 10vh;
   padding: 5vh;
   display: flex;
   gap: 5vh;
-  background: linear-gradient(to right top, #385d8200, #315170);
-  backdrop-filter: blur(2rem);
+  background: linear-gradient(to right top, #385d8200, #315070ae);
+  backdrop-filter: blur(1rem);
   box-shadow: 10px -15px 10px rgba(0, 0, 0, 0.195);
 }
 
@@ -93,7 +93,7 @@ body {
   padding: 5vh;
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(2rem);
+  backdrop-filter: blur(1rem);
   box-shadow: -10px -15px 10px rgba(0, 0, 0, 0.195);
 }
 
@@ -179,7 +179,8 @@ body {
 }
 
 .future {
-  background: linear-gradient(to top, #5388bd00, #5388bd);
+  backdrop-filter: blur(1rem);
+  background: linear-gradient(to top, #5388bd00, #5388bd9b);
   display: flex;
   flex: 0 0 auto;
   flex-direction: row;
@@ -194,7 +195,7 @@ body {
 }
 
 .hourlyContainer {
-  background: linear-gradient(to bottom, #53627000, #2f6495c1);
+  background: linear-gradient(to bottom, #53627000, #2f64958e);
   min-width: 60px;
   height: 100%;
   border-radius: 1vh;
@@ -321,7 +322,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to left bottom, #5388bd00, #5388bdba);
+  background: linear-gradient(to left bottom, #5388bd00, #5388bdae);
   border-radius: 1vh;
   height: 100%;
   width: 100%;
@@ -395,4 +396,8 @@ body {
   flex-direction: column;
   gap: 3vh;
   /* z-index: 0; */
+  background-image: url("./media/wave.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
