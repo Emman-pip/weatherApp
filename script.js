@@ -323,7 +323,7 @@ async function useNewsData(subject = "Philippines") {
       newsfeed.appendChild(container);
     }
   } catch (err) {
-    console.log(err + "\nNEWS SECTION IS NOT AVAILABLE");
+    alert("NEWS SECTION IS NOT AVAILABLE");
     disableNews();
   }
 }
