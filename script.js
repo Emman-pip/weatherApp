@@ -5,14 +5,6 @@ function disableNews() {
   const newsPanel = document.querySelector(".newsPanel");
   newsPanel.classList.add("fit");
   newsFeed.classList.add("none");
-
-  const temp = document.querySelector(".temperature");
-  const date = document.querySelector(".date");
-  temp.classList.add("additional");
-  date.classList.add("additional");
-
-  const weatherBox = document.querySelector(".weatherBox");
-  date.classList.add("fit");
 }
 function oneMonthAgo() {
   const date = new Date();
