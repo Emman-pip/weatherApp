@@ -15,22 +15,6 @@ body {
   width: 100vw;
 }
 
-.container {
-  /* background-image: url("/media/7481714.jpg");
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat; */
-  background-color: var(--b-color);
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 3vh;
-  /* z-index: 0; */
-}
-
 .weatherAndNews {
   /* background-image: url("/media/7481714.jpg");
         background-position: center center;
@@ -65,19 +49,22 @@ body {
   flex-direction: column;
   gap: 1vh;
   width: 50%;
+  overflow-y: scroll;
+  overflow-x: visible;
 }
 
 .location {
-  font-size: 5vh;
+  font-size: 3vh;
 }
 .condition {
-  font-size: 6vh;
+  font-size: 4vh;
 }
 
 .pictures {
   display: flex;
   height: 100%;
   gap: 2vh;
+  justify-content: center;
 }
 .text {
   display: flex;
@@ -245,7 +232,7 @@ body {
     min-height: 150px;
   }
   .container {
-    height: fit-content;
+    /* height: fit-content; */
     padding: 3vh;
   }
   .location {
@@ -253,6 +240,11 @@ body {
   }
   .condition {
     font-size: 4vw;
+  }
+  .date,
+  .temperature {
+    max-width: 7vh;
+    max-height: 30vh;
   }
 }
 
@@ -321,6 +313,8 @@ body {
 
 .date,
 .temperature {
+  min-width: 125px;
+  min-height: 102px;
   font-size: 3vh;
   display: flex;
   font-weight: 1000;
@@ -330,8 +324,6 @@ body {
   background: linear-gradient(to left bottom, #5388bd00, #5388bdba);
   border-radius: 1vh;
   height: 100%;
-  min-height: 102px;
-  min-width: 125px;
   width: 100%;
   text-align: center;
 }
@@ -377,4 +369,30 @@ body {
 
 .none {
   display: none;
+}
+
+@media (max-height: 480px) {
+  .newsPanel,
+  .weatherBox {
+    min-height: 314px;
+  }
+  .future {
+    min-height: 130px;
+  }
+}
+
+.container {
+  /* background-image: url("/media/7481714.jpg");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat; */
+  background-color: var(--b-color);
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3vh;
+  /* z-index: 0; */
 }
