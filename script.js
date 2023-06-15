@@ -5,6 +5,14 @@ function disableNews() {
   const newsPanel = document.querySelector(".newsPanel");
   newsPanel.classList.add("fit");
   newsFeed.classList.add("none");
+
+  const temp = document.querySelector(".temperature");
+  const date = document.querySelector(".date");
+  temp.classList.add("additional");
+  date.classList.add("additional");
+
+  const weatherBox = document.querySelector(".weatherBox");
+  date.classList.add("fit");
 }
 function oneMonthAgo() {
   const date = new Date();
@@ -32,12 +40,12 @@ function oneMonthAgo() {
 //news apikey1: 79abc5ecbae5402a80a772a198b41908 apikey2:b2950f13dd814fa19bd4a6e883ef3217
 async function APIdata(location) {
   try {
-    const data = await fetch(
-      `https://api.weatherapi.com/v1/current.json?key=9f959711daae4cbd94d132137231206&q=${location}`,
-      {
-        mode: "cors",
-      }
-    );
+    // const data = await fetch(
+    //   `https://api.weatherapi.com/v1/current.json?key=9f959711daae4cbd94d132137231206&q=${location}`,
+    //   {
+    //     mode: "cors",
+    //   }
+    // );
 
     const [dataNews, dataForecast] = await Promise.all([
       fetch(
@@ -55,9 +63,10 @@ async function APIdata(location) {
     ]);
 
     const jsn = await Promise.all([dataNews.json(), dataForecast.json()]);
+    console.log(jsn);
     return jsn;
   } catch (error) {
-    alert(err + "\nNEWS SECTION IS NOT AVAILABLE");
+    alert(err + "\nAPIS ARE NOT AVAILABLE/AT FULL CAPACITY");
     disableNews();
   }
 }
@@ -68,7 +77,6 @@ async function forecastData(location) {
     const data = await APIdata(location);
     return data[1];
   } catch (err) {
-    alert(err + "\nSEEMS LIKE I'M NOT UP");
     window.close();
   }
   //   //location
@@ -200,7 +208,6 @@ async function newsData(subject) {
 async function perhour(time) {
   const data = await forecastData(location);
   const clock = parseInt(time);
-  console.log(data);
   //   const temp = data.forecast.forecastday[0].hour[parseInt(time) - 1].temp_c;
   const temp = data.forecast.forecastday[0].hour[clock].temp_c;
   return temp;
@@ -214,7 +221,6 @@ async function hourlyConditionPic(time, image) {
     const data = await fetch(request);
     // const image = document.querySelector(".hourlyCondition");
     const jsn = await data.json();
-    console.log(jsn);
     if (parseInt(time) < 6 || parseInt(time) > 18) {
       image.src = `./media/weather/weather/64x64/night/${jsn[time].icon}.png`;
     } else {
@@ -351,7 +357,6 @@ async function futureWeather(loc) {
       fcontainer.appendChild(picture);
 
       const hour = parseInt(timeofDay[0].slice(-5, -3));
-      console.log(hour);
       hourlyConditionPic(hour, picture);
 
       const timeDisplay = document.createElement("p");

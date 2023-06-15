@@ -374,3 +374,7 @@ body {
 .none {
   display: none;
 }
+
+.additional {
+  display: flex;
+}
