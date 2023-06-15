@@ -215,6 +215,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: end;
+  overflow: hidden;
 }
 
 .conditionImage {
@@ -238,7 +239,8 @@ body {
   }
 
   .future {
-    min-height: 10vh;
+    width: 70%;
+    height: 25vh;
   }
   .container {
     height: fit-content;
@@ -267,7 +269,8 @@ body {
     gap: 1rem;
   }
   .future {
-    height: 20vh;
+    width: 70%;
+    height: 25vh;
   }
   .location {
     font-size: 3vw;
@@ -275,9 +278,15 @@ body {
   .condition {
     font-size: 4vw;
   }
+  .hourlyContainer {
+    min-height: 94px;
+  }
 }
 /*  */
 @media (max-width: 370px) {
+  .hourlyContainer {
+    min-height: 94px;
+  }
   body {
     overflow: scroll;
   }
@@ -348,5 +357,20 @@ body {
 }
 
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: monospace;
+}
+
+.date,
+.temperatureText,
+.condition,
+.location {
+  color: whitesmoke;
+}
+
+.fit {
+  height: fit-content;
+}
+
+.none {
+  display: none;
 }

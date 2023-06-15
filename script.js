@@ -1,4 +1,11 @@
 // date
+
+function disableNews() {
+  const newsFeed = document.querySelector(".newsfeed");
+  const newsPanel = document.querySelector(".newsPanel");
+  newsPanel.classList.add("fit");
+  newsFeed.classList.add("none");
+}
 function oneMonthAgo() {
   const date = new Date();
   const day = () => {
@@ -50,8 +57,8 @@ async function APIdata(location) {
     const jsn = await Promise.all([dataNews.json(), dataForecast.json()]);
     return jsn;
   } catch (error) {
-    alert(err + "\nSEEMS LIKE I'M NOT UP");
-    window.close();
+    alert(err + "\nNEWS SECTION IS NOT AVAILABLE");
+    disableNews();
   }
 }
 
@@ -159,7 +166,8 @@ async function newsData(subject) {
 
     return [articleTitle, articleDescription, articleUrl];
   } catch (err) {
-    alert(err + "\nNO NEWS DATA AVAILABLE IN THE MOMENT");
+    disableNews();
+    console.log(err);
   }
 }
 
@@ -213,8 +221,9 @@ async function hourlyConditionPic(time, image) {
       image.src = `/media/weather/weather/64x64/day/${jsn[time].icon}.png`;
     }
   } catch (err) {
-    alert(err + "\nSEEMS LIKE I'M NOT UP");
-    window.close();
+    console.log(err);
+    //alert(err + "\nSEEMS LIKE I'M NOT UP");
+    //window.close();
   }
   // let icon = "";
 
@@ -286,8 +295,8 @@ async function useWeatherData(location = "Philippines") {
     dateText.textContent = COR + "% chance of rain";
     date.appendChild(dateText);
   } catch (err) {
-    alert(err + "\nSEEMS LIKE I'M NOT UP");
-    window.close();
+    console.log(err + "\nSEEMS LIKE I'M NOT UP");
+    //window.close();
   }
 }
 
@@ -316,8 +325,8 @@ async function useNewsData(subject = "Philippines") {
       newsfeed.appendChild(container);
     }
   } catch (err) {
-    alert(err + "\nSEEMS LIKE I'M NOT UP");
-    window.close();
+    console.log(err + "\nNEWS SECTION IS NOT AVAILABLE");
+    disableNews();
   }
 }
 
@@ -354,8 +363,7 @@ async function futureWeather(loc) {
       fcontainer.appendChild(tempDisplay);
     }
   } catch (error) {
-    alert(err + "\nSEEMS LIKE I'M NOT UP");
-    window.close();
+    console.log(err);
   }
 }
 
