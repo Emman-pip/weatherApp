@@ -369,17 +369,25 @@ function call(value = "Philippines") {
   useNewsData(value);
   futureWeather(value);
 }
-
+function loadingScreen() {
+  const screen = document.querySelector(".loadingBlur");
+  screen.classList.toggle("none");
+  setTimeout(() => {
+    screen.classList.toggle("none");
+  }, 3000);
+}
 (function searchFunction() {
   call();
 
   const searchBox = document.querySelector(".search");
   const button = document.querySelector(".onlyButton");
   button.addEventListener("click", () => {
+    loadingScreen();
     call(searchBox.value);
   });
   searchBox.addEventListener("keyup", (event) => {
     if (event.code == "Enter") {
+      loadingScreen();
       call(searchBox.value);
     }
   });

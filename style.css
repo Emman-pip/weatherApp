@@ -368,10 +368,6 @@ body {
   height: fit-content;
 }
 
-.none {
-  display: none;
-}
-
 @media (max-height: 480px) {
   .weatherBox {
     min-height: 314px;
@@ -383,9 +379,9 @@ body {
 
 .container {
   /* background-image: url("/media/7481714.jpg");
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat; */
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat; */
   background-color: var(--b-color);
   min-height: 100vh;
   width: 100vw;
@@ -399,4 +395,42 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+}
+
+.loadingBlur {
+  display: none;
+  position: fixed;
+  min-height: 100vh;
+  min-width: 100vw;
+  backdrop-filter: blur(2rem);
+  background-color: #53627086;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  animation: ease-in 5s;
+}
+
+@keyframes load {
+  0% {
+    rotate: 90deg;
+  }
+  25% {
+    rotate: 180deg;
+  }
+  50% {
+    rotate: 270deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+.loadingIcon {
+  animation-delay: 0ms;
+  height: 20vw;
+  animation-name: load;
+  animation-duration: 5s;
+}
+
+.none {
+  display: flex;
 }
