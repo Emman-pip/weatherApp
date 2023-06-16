@@ -373,7 +373,6 @@ body {
 }
 
 @media (max-height: 480px) {
-  .newsPanel,
   .weatherBox {
     min-height: 314px;
   }
