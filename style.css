@@ -433,4 +433,5 @@ body {
 
 .none {
   display: flex;
+  position: fixed;
 }
