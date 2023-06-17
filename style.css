@@ -215,7 +215,7 @@ body {
   overflow-x: scroll;
   gap: 1vw;
   width: 70%;
-  height: 25vh;
+  height: 140px;
   border-radius: 3vh;
   padding: 1rem;
   box-shadow: 0px 15px 10px rgba(0, 0, 0, 0.195);
@@ -257,8 +257,8 @@ body {
 
   .future {
     width: 70%;
-    height: 25vh;
-    min-height: 150px;
+    height: 140px;
+    min-height: 140px;
   }
   .container {
     /* height: fit-content; */
@@ -294,7 +294,7 @@ body {
   }
   .future {
     width: 70%;
-    height: 25vh;
+    height: 140px;
   }
   .location {
     font-size: 22px;
@@ -328,6 +328,12 @@ body {
   .future {
     min-width: 350px;
     max-height: 500px;
+  }
+
+  .future {
+    width: 70%;
+    height: 140px;
+    min-height: 100px;
   }
   .weatherBox {
     height: 200px;
