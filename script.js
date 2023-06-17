@@ -292,6 +292,7 @@ async function futureWeather(loc) {
 
 function call(value = "Philippines") {
   const parent = document.querySelector(".newsfeed");
+  parent.innerHTML = "";
   useWeatherData(value);
   useNewsData(value, parent);
   futureWeather(value);
