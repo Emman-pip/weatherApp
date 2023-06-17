@@ -232,6 +232,7 @@ body {
   justify-content: end;
   overflow: hidden;
   color: whitesmoke;
+  max-height: 100px;
 }
 
 .conditionImage {
