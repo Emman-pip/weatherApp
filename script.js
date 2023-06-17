@@ -32,33 +32,18 @@ function oneMonthAgo() {
 //news apikey1: 79abc5ecbae5402a80a772a198b41908 apikey2:b2950f13dd814fa19bd4a6e883ef3217
 async function APIdata(location) {
   try {
-    // const data = await fetch(
-    //   `https://api.weatherapi.com/v1/current.json?key=9f959711daae4cbd94d132137231206&q=${location}`,
-    //   {
-    //     mode: "cors",
-    //   }
-    // );
+    const dataForecast = await fetch(
+      `https://api.weatherapi.com/v1/forecast.json?key=31c3bfca6ae74f2bacb123625230806&q=${location}`,
+      {
+        mode: "cors",
+      }
+    );
 
-    const [dataNews, dataForecast] = await Promise.all([
-      fetch(
-        `https://newsapi.org/v2/everything?q=weather-${location}&from=${oneMonthAgo()}&sortBy=popularity&apiKey=79abc5ecbae5402a80a772a198b41908`,
-        {
-          mode: "cors",
-        }
-      ),
-      fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=31c3bfca6ae74f2bacb123625230806&q=${location}`,
-        {
-          mode: "cors",
-        }
-      ),
-    ]);
-
-    const jsn = await Promise.all([dataNews.json(), dataForecast.json()]);
+    const jsn = await dataForecast.json();
     console.log(jsn);
     return jsn;
   } catch (error) {
-    alert(err + "\nAPIS ARE NOT AVAILABLE/AT FULL CAPACITY");
+    alert(error + "\nAPIS ARE NOT AVAILABLE/AT FULL CAPACITY");
     disableNews();
   }
 }
@@ -67,31 +52,11 @@ async function APIdata(location) {
 async function forecastData(location) {
   try {
     const data = await APIdata(location);
-    return data[1];
+    return data;
   } catch (err) {
-    window.close();
+    // window.close()
+    console.log(err);
   }
-  //   //location
-  //   const city = data.location.name;
-  //   const country = data.location.country;
-  //   //date of forecast
-  //   const date = data.forecast.forecastday[0].date;
-  //   //per hour
-  //   const forecast = data.forecast.forecastday[0].hour;
-  //   const at_1am = data.forecast.forecastday[0].hour[1].temp_c;
-  //   const at_3am = data.forecast.forecastday[0].hour[1].temp_c;
-  //   const at_6am = data.forecast.forecastday[0].hour[1].temp_c;
-  //   const at_9am = data.forecast.forecastday[0].hour[1].temp_c;
-  //   const at_12am = data.forecast.forecastday[0].hour[1].temp_c;
-  //   const at_1pm = data.forecast.forecastday[0].hour[1].temp_c;
-  //   const at_3pm = data.forecast.forecastday[0].hour[1].temp_c;
-  //   const at_6pm = data.forecast.forecastday[0].hour[1].temp_c;
-  //   const at_9pm = data.forecast.forecastday[0].hour[1].temp_c;
-  //   const at_12pm = data.forecast.forecastday[0].hour[1].temp_c;
-  //   //condition
-  //   const condition = data.current.condition.text;
-  //   console.log(data[1]);
-  //   console.log(at_12am);
 }
 forecastData("Batangas");
 
@@ -123,84 +88,10 @@ function keyWords(subject) {
   return list;
 }
 
-function toAppend(data, list1, list2, list3) {
-  //title
-  for (let i = 0; i < data[0].articles.length; i++) {
-    const titles = data[0].articles[i].title;
-    list2.push(titles);
-    //description
-    const preDescriptions = data[0].articles[i].description;
-    list1.push(preDescriptions);
-
-    //url
-    const urls = data[0].articles[i].url;
-    list3.push(urls);
-  }
-}
-
-//for news
-// TODO: capitalize the 1st letter[of "subject"] and lowercase the remaining
-async function newsData(subject) {
-  try {
-    const data = await APIdata(subject);
-    const articleTitle = [];
-    const articleDescription = [];
-    const articleUrl = [];
-
-    const descriptions = [];
-    const titles = [];
-    const urls = [];
-    toAppend(data, descriptions, titles, urls);
-
-    const filter = keyWords(subject);
-    for (let i = 0; i < filter.length; i++) {
-      titles.forEach((word) => {
-        if (word.includes(filter[i])) {
-          const index = titles.indexOf(word);
-          articleTitle.push(titles[index]);
-          articleDescription.push(descriptions[index]);
-          articleUrl.push(urls[index]);
-        }
-      });
-    }
-
-    return [articleTitle, articleDescription, articleUrl];
-  } catch (err) {
-    disableNews();
-    console.log(err);
-  }
-}
-
-// async function weather(country) {
-//   const data = await forecastData(country);
-//   const city = data.location.name;
-//   const nation = data.location.country;
-//   const condition = data.current.condition.text;
-//   console.log(
-//     `WEATHER:\nlocation: ${city}, ${nation}\ncondition: ${condition}`
-//   );
-//   console.log(data);
-// }
-
-// weather("Tanauan city, batangas");
-
-// newsData("Philippines").then((res) => {
-//   console.log(res);
-// });
-
-// news api key:b2950f13dd814fa19bd4a6e883ef3217
-// url format `https://newsapi.org/v2/everything?q=weather-${location}&from=2023-06-1&sortBy=popularity&apiKey=b2950f13dd814fa19bd4a6e883ef3217`
-// `https://newsapi.org/v2/everything?q=weather-${location}&from=2023-06-1&sortBy=popularity&apiKey=b2950f13dd814fa19bd4a6e883ef3217`;
-
-// function search(){
-//     const searchButton = document.querySelector(".onlyButton");
-
-// }
-//MALI ANG CELSIUS SA PROGRAM!!!
 async function perhour(time) {
   const data = await forecastData(location);
   const clock = parseInt(time);
-  //   const temp = data.forecast.forecastday[0].hour[parseInt(time) - 1].temp_c;
+
   const temp = data.forecast.forecastday[0].hour[clock].temp_c;
   return temp;
 }
@@ -223,23 +114,6 @@ async function hourlyConditionPic(time, image) {
     //alert(err + "\nSEEMS LIKE I'M NOT UP");
     //window.close();
   }
-  // let icon = "";
-
-  // for (let i = 0; i < jsn.length; i++) {
-  //   if (time == jsn[i].day.toLowerCase()) {
-  //     console.log(condition + "\n" + jsn[i].day);
-  //     icon = jsn[i].day;
-  //     return;
-  //   } else if (condition.toLowerCase() == "clear") {
-  //     image.src = "/media/weather/weather/64x64/night/113.png";
-  //     return;
-  //   }
-  // }
-  // if (icon == "") {
-  //   alert("No Available Icon for the Weather Condition");
-  // }
-
-  //   image.src = `/media/weather/weather/64x64/day/${icon}.png`;
 }
 
 function InsertImageElement(src, parent) {
@@ -248,11 +122,6 @@ function InsertImageElement(src, parent) {
   image.classList.add("thermo");
   image.src = src;
   mother.appendChild(image);
-
-  // const search = document.querySelector(".onlyButton");
-  // const magnifyingGlass = new Image();
-  // magnifyingGlass.src = "/media/magnify.svg";
-  // search.appendChild(magnifyingGlass);
 }
 
 async function useWeatherData(location = "Philippines") {
@@ -271,9 +140,6 @@ async function useWeatherData(location = "Philippines") {
 
     loc.textContent = `${city}, ${nation}`;
     condition.textContent = `${conditionText}`;
-    // console.log(conditionText);
-    // weatherConditionPic(conditionText);
-
     const image = document.querySelector(".conditionImage");
     image.src = weatherData.current.condition.icon;
 
@@ -289,44 +155,104 @@ async function useWeatherData(location = "Philippines") {
     const COR = weatherData.forecast.forecastday[0].day.daily_chance_of_rain;
     const dateText = document.createElement("p");
 
-    dateText.classList.add("date");
+    dateText.classList.add("dateText");
     dateText.textContent = COR + "% chance of rain";
     date.appendChild(dateText);
   } catch (err) {
     console.log(err + "\nSEEMS LIKE I'M NOT UP");
-    //window.close();
   }
 }
 
-async function useNewsData(subject = "Philippines") {
+// async function useNewsData(subject = "Philippines") {
+//   try {
+//     const data = await newsData(subject);
+//     const newsfeed = document.querySelector(".newsfeed");
+//     newsfeed.innerHTML = "";
+//     for (let i = 0; i < data[0].length; i++) {
+//       const container = document.createElement("div");
+//       container.classList.add("newsContainer");
+
+//       const title = document.createElement("h3");
+//       title.classList.add("newsTitle");
+//       title.textContent = data[0][i];
+//       const description = document.createElement("p");
+//       title.classList.add("newsDescription");
+//       description.textContent = data[1][i];
+
+//       title.onclick = () => {
+//         window.open(data[2][i]);
+//       };
+
+//       container.appendChild(title);
+//       container.appendChild(description);
+//       newsfeed.appendChild(container);
+//     }
+//   } catch (err) {
+//     alert("NEWS SECTION IS NOT AVAILABLE");
+//     disableNews();
+//   }
+// }
+///////////////////////////////
+
+async function newsData(subject = "London") {
   try {
-    const data = await newsData(subject);
-    const newsfeed = document.querySelector(".newsfeed");
-    newsfeed.innerHTML = "";
-    for (let i = 0; i < data[0].length; i++) {
-      const container = document.createElement("div");
-      container.classList.add("newsContainer");
-
-      const title = document.createElement("h3");
-      title.classList.add("newsTitle");
-      title.textContent = data[0][i];
-      const description = document.createElement("p");
-      title.classList.add("newsDescription");
-      description.textContent = data[1][i];
-
-      title.onclick = () => {
-        window.open(data[2][i]);
-      };
-
-      container.appendChild(title);
-      container.appendChild(description);
-      newsfeed.appendChild(container);
-    }
-  } catch (err) {
-    alert("NEWS SECTION IS NOT AVAILABLE");
-    disableNews();
+    const data = await fetch(
+      `https://newsdata.io/api/1/news?apikey=pub_2463770f5e029adaefc2921baa9e82dcc1115&q=${subject}`
+    );
+    const news = await data.json();
+    return news;
+  } catch (error) {
+    alert(error + "\nNO NEWS DATA AVAILABLE");
+    const newsWindow = document.querySelector(".news");
+    newsWindow.classList.add("none");
   }
 }
+
+newsData().then((res) => {
+  console.log(res);
+});
+
+async function useNewsData(subject, parent) {
+  const Newscontainer = document.createElement("div");
+  //   Newscontainer.innerHTML = "";
+  parent.appendChild(Newscontainer);
+  Newscontainer.classList.add("news");
+
+  //   const iconContainer = document.createElement("div");
+  //   Newscontainer.appendChild(iconContainer);
+  const infoContainer = document.createElement("div");
+  Newscontainer.appendChild(infoContainer);
+  infoContainer.classList.add("gap");
+
+  const data = await newsData(subject);
+  const dataList = data.results;
+  for (let x in dataList) {
+    const articleContainer = document.createElement("div");
+    infoContainer.appendChild(articleContainer);
+
+    const title = document.createElement("div");
+    title.style.cursor = "pointer";
+    title.classList.add("title");
+    title.textContent = dataList[x].title;
+    articleContainer.appendChild(title);
+
+    const description = document.createElement("div");
+    description.classList.add("desc");
+
+    description.textContent = dataList[x].description;
+    articleContainer.appendChild(description);
+
+    // const icon = new Image();
+    // icon.src = dataList[x].image_url;
+    // iconContainer.appendChild(icon);
+
+    title.onclick = () => {
+      window.open(dataList[x].link);
+    };
+  }
+}
+
+///////////////////////////////
 
 async function futureWeather(loc) {
   try {
@@ -365,8 +291,9 @@ async function futureWeather(loc) {
 }
 
 function call(value = "Philippines") {
+  const parent = document.querySelector(".newsfeed");
   useWeatherData(value);
-  useNewsData(value);
+  useNewsData(value, parent);
   futureWeather(value);
 }
 function loadingScreen() {

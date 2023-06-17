@@ -10,6 +10,28 @@
   --e-color: #5388bd;
 }
 
+.conditionContainer,
+.date,
+.temperature {
+  min-width: 125px;
+  min-height: 102px;
+  max-height: 200px;
+  height: 100%;
+  width: 100%;
+
+  font-size: 3vh;
+  display: flex;
+  font-weight: 1000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to left bottom, #5388bd00, #5388bdae);
+  border-radius: 1vh;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.264);
+}
+
 body {
   height: 100vh;
   width: 100vw;
@@ -41,23 +63,25 @@ body {
   gap: 5vh;
   background: linear-gradient(to right top, #385d8200, #315070ae);
   backdrop-filter: blur(1rem);
-  box-shadow: 10px -15px 10px rgba(0, 0, 0, 0.195);
+  box-shadow: 10px 15px 10px rgba(0, 0, 0, 0.195);
 }
 
 .info {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 1vh;
-  width: 50%;
-  overflow-y: scroll;
+  width: 100%;
+  /* overflow-y: scroll; */
   overflow-x: visible;
 }
 
 .location {
-  font-size: 3vh;
+  font-size: 30px;
 }
 .condition {
-  font-size: 4vh;
+  font-size: 40px;
 }
 
 .pictures {
@@ -65,6 +89,7 @@ body {
   height: 100%;
   gap: 2vh;
   justify-content: center;
+  overflow: visible;
 }
 .text {
   display: flex;
@@ -76,7 +101,7 @@ body {
 
 .conditionImage {
   border-radius: 10vh;
-  width: 40%;
+  width: 70%;
   object-fit: contain;
 }
 
@@ -94,7 +119,8 @@ body {
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(1rem);
-  box-shadow: -10px -15px 10px rgba(0, 0, 0, 0.195);
+  box-shadow: 10px 15px 10px rgba(0, 0, 0, 0.195);
+  min-height: 300px;
 }
 
 .topbar {
@@ -164,6 +190,7 @@ body {
   gap: 3vh;
   padding-top: 3vh;
   overflow-y: scroll;
+  overflow-x: hidden;
   scroll-behavior: smooth;
   width: 100%;
   height: 100%;
@@ -191,7 +218,7 @@ body {
   height: 25vh;
   border-radius: 3vh;
   padding: 1rem;
-  box-shadow: 0px -15px 10px rgba(0, 0, 0, 0.195);
+  box-shadow: 0px 15px 10px rgba(0, 0, 0, 0.195);
 }
 
 .hourlyContainer {
@@ -237,11 +264,12 @@ body {
     padding: 3vh;
   }
   .location {
-    font-size: 3vw;
+    font-size: 36px;
   }
   .condition {
-    font-size: 4vw;
+    font-size: 50px;
   }
+  .conditionContainer,
   .date,
   .temperature {
     max-width: 7vh;
@@ -251,15 +279,15 @@ body {
 
 @media (max-width: 750px) {
   .weatherBox {
-    height: 30vw;
+    height: 50vw;
   }
   .text {
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     padding-top: 1rem;
   }
-  .pictures {
+  /* .pictures {
     display: none;
-  }
+  } */
   .weatherAndNews {
     gap: 1rem;
   }
@@ -268,17 +296,20 @@ body {
     height: 25vh;
   }
   .location {
-    font-size: 3vw;
+    font-size: 22px;
   }
   .condition {
-    font-size: 4vw;
+    font-size: 30px;
   }
   .hourlyContainer {
     min-height: 94px;
   }
+  .weatherBox {
+    padding: 5rem;
+  }
 }
 /*  */
-@media (max-width: 370px) {
+@media (max-width: 450px) {
   .hourlyContainer {
     min-height: 94px;
   }
@@ -297,36 +328,30 @@ body {
     min-width: 350px;
     max-height: 500px;
   }
+  .weatherBox {
+    height: 200px;
+  }
   .location {
-    font-size: 3vw;
+    font-size: 1rem;
   }
   .condition {
-    font-size: 4vw;
+    font-size: 1.5rem;
+  }
+  .date,
+  .temperature {
+    display: none;
+  }
+  .text {
+    padding: 0;
   }
 }
 
-.temperatureText {
-  font-size: 3vh;
+.temperatureText,
+.dateText {
+  font-size: 20px;
   font-weight: 1000;
   /* color: whitesmoke; */
   /* background: url("/media/thermometer-lines.svg") center center no-repeat; */
-}
-
-.date,
-.temperature {
-  min-width: 125px;
-  min-height: 102px;
-  font-size: 3vh;
-  display: flex;
-  font-weight: 1000;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(to left bottom, #5388bd00, #5388bdae);
-  border-radius: 1vh;
-  height: 100%;
-  width: 100%;
-  text-align: center;
 }
 
 .thermo {
@@ -374,6 +399,10 @@ body {
   }
   .future {
     min-height: 130px;
+  }
+  .container {
+    max-width: fit-content;
+    max-height: fit-content;
   }
 }
 
@@ -434,4 +463,17 @@ body {
 .none {
   display: none;
   position: fixed;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+@media (max-width: 352px) {
+  .container {
+    min-width: 352px;
+    min-height: 880px;
+    overflow: scroll;
+  }
 }
