@@ -299,9 +299,9 @@ function call(value = "Philippines") {
 }
 function loadingScreen() {
   const screen = document.querySelector(".loadingBlur");
-  screen.classList.toggle("none");
+  screen.classList.toggle("appear");
   setTimeout(() => {
-    screen.classList.toggle("none");
+    screen.classList.toggle("appear");
   }, 3000);
 }
 (function searchFunction() {

@@ -450,6 +450,9 @@ body {
   animation: ease-in 5s;
 }
 
+.appear {
+  display: flex;
+}
 @keyframes load {
   0% {
     rotate: 90deg;
